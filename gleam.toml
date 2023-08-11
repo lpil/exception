@@ -2,6 +2,7 @@ name = "exception"
 version = "1.0.0"
 gleam = ">= 0.30.0"
 description = "A tiny package for dealing with exceptions"
+licences = ["Apache-2.0"]
 
 repository = { type = "github", user = "lpil", repo = "exception" }
 links = [
