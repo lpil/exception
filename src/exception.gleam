@@ -1,4 +1,4 @@
-import gleam/dynamic.{Dynamic}
+import gleam/dynamic.{type Dynamic}
 
 // TODO: implement 
 // TODO: test 
