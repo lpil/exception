@@ -1,5 +1,5 @@
 name = "exception"
-version = "1.1.0"
+version = "1.1.1"
 gleam = ">= 0.32.0"
 description = "A tiny package for dealing with exceptions"
 licences = ["Apache-2.0"]
@@ -10,8 +10,8 @@ links = [
 ]
 
 [dependencies]
-gleam_stdlib = "~> 0.30"
+gleam_stdlib = "~> 0.30 or ~> 1.0"
 
 [dev-dependencies]
 gleeunit = "~> 1.0"
-simplifile = "~> 0.1"
+simplifile = "~> 1.0"

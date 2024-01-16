@@ -44,12 +44,12 @@ pub fn defer_crash_test() {
 const test_file = "tmp.txt"
 
 fn reset() -> Nil {
-  let assert Ok(_) = simplifile.write("", test_file)
+  let assert Ok(_) = simplifile.write(test_file, "")
   Nil
 }
 
 fn append(text: String) -> Nil {
-  let assert Ok(_) = simplifile.append(text, test_file)
+  let assert Ok(_) = simplifile.append(test_file, text)
   Nil
 }
 
