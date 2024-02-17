@@ -10,8 +10,26 @@ pub fn rescue_ok_test() {
   let assert Ok(1) = exception.rescue(fn() { 1 })
 }
 
-pub fn rescue_error_test() {
-  let assert Error(_) = exception.rescue(fn() { panic })
+pub fn rescue_errored_test() {
+  let assert Error(exception.Errored(_)) = exception.rescue(fn() { panic })
+}
+
+@external(erlang, "erlang", "throw")
+@external(javascript, "./exception_test_ffi.mjs", "throw_")
+fn throw(a: whatever) -> Nil
+
+pub fn rescue_thrown_test() {
+  let assert Error(exception.Thrown(_)) =
+    exception.rescue(fn() { throw("123") })
+}
+
+@external(erlang, "erlang", "exit")
+@external(javascript, "./exception_test_ffi.mjs", "throw_")
+fn exit(a: whatever) -> Nil
+
+@target(erlang)
+pub fn rescue_exited_test() {
+  let assert Error(exception.Exited(_)) = exception.rescue(fn() { exit("123") })
 }
 
 pub fn defer_ok_test() {

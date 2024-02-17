@@ -1,8 +1,21 @@
 import gleam/dynamic.{type Dynamic}
 
-// TODO: implement 
-// TODO: test 
-// TODO: document
+pub type Exception {
+  /// An error was raised.
+  /// On Erlang this would be caused by calling the `erlang:error/1` function,
+  /// or some other runtime error.
+  /// On JavaScript this would be caused by throwing an `Error` object.
+  Errored(Dynamic)
+  /// A value was thrown.
+  /// On Erlang this would be caused by calling the `erlang:throw/1` function.
+  /// On JavaScript this would be caused by throwing any non-`Error` value.
+  Thrown(Dynamic)
+  /// A process exited.
+  /// On Erlang this would be caused by calling the `erlang:exit/1` function.
+  /// On JavaScript this variant is not used.
+  Exited(Dynamic)
+}
+
 /// This function will catch any crash and convert it into a result rather than
 /// crashing the process.
 ///
@@ -13,10 +26,8 @@ import gleam/dynamic.{type Dynamic}
 ///
 @external(erlang, "exception_ffi", "rescue")
 @external(javascript, "./exception_ffi.mjs", "rescue")
-pub fn rescue(body: fn() -> a) -> Result(a, Dynamic)
+pub fn rescue(body: fn() -> a) -> Result(a, Exception)
 
-// TODO: implement 
-// TODO: test 
 /// This function will run a cleanup function after the given body function, even
 /// if the body function crashes.
 ///

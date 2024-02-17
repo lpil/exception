@@ -4,7 +4,10 @@
 
 rescue(F) ->
     try {ok, F()}
-    catch Tag:Term -> {error, {Tag, Term}}
+    catch
+      error:Term -> {error, {errored, Term}};
+      throw:Term -> {error, {thrown, Term}};
+      exit:Term -> {error, {exited, Term}}
     end.
 
 defer(Cleanup, Body) ->
