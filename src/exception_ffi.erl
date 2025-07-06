@@ -1,6 +1,6 @@
 -module(exception_ffi).
 
--export([rescue/1, defer/2]).
+-export([rescue/1, defer/2, on_crash/2]).
 
 rescue(F) ->
     try {ok, F()}
@@ -13,4 +13,11 @@ rescue(F) ->
 defer(Cleanup, Body) ->
     try Body()
     after Cleanup()
+    end.
+
+on_crash(Cleanup, Body) ->
+    try Body()
+    catch A:B:C ->
+        Cleanup(), 
+        erlang:raise(A,B,C)
     end.

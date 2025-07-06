@@ -1,5 +1,5 @@
-import gleeunit
 import exception
+import gleeunit
 import simplifile
 
 pub fn main() {
@@ -7,7 +7,7 @@ pub fn main() {
 }
 
 pub fn rescue_ok_test() {
-  let assert Ok(1) = exception.rescue(fn() { 1 })
+  assert Ok(1) == exception.rescue(fn() { 1 })
 }
 
 pub fn rescue_errored_test() {
@@ -42,7 +42,7 @@ pub fn defer_ok_test() {
     2
   }
 
-  let assert "321" = read()
+  assert "321" == read()
 }
 
 pub fn defer_crash_test() {
@@ -56,7 +56,34 @@ pub fn defer_crash_test() {
       panic
     })
 
-  let assert "123" = read()
+  assert "123" == read()
+}
+
+pub fn on_crash_ok_test() {
+  reset()
+
+  let assert 2 = {
+    use <- exception.on_crash(fn() { append("1") })
+    use <- exception.on_crash(fn() { append("2") })
+    use <- exception.on_crash(fn() { append("3") })
+    2
+  }
+
+  assert "" == read()
+}
+
+pub fn on_crash_crash_test() {
+  reset()
+
+  let assert Error(_) =
+    exception.rescue(fn() {
+      use <- exception.on_crash(fn() { append("3") })
+      use <- exception.on_crash(fn() { append("2") })
+      append("1")
+      panic
+    })
+
+  assert "123" == read()
 }
 
 const test_file = "tmp.txt"

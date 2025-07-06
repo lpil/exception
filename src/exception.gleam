@@ -49,3 +49,14 @@ pub fn rescue(body: fn() -> a) -> Result(a, Exception)
 @external(erlang, "exception_ffi", "defer")
 @external(javascript, "./exception_ffi.mjs", "defer")
 pub fn defer(cleanup: fn() -> b, body: fn() -> a) -> a
+
+/// This function will run a cleanup function after the given body function,
+/// but only if the body function crashes.
+///
+/// You should ideally never use this function! Exceptions are not flow control
+/// in Gleam, a result type should be used instead. This function is only if you
+/// need to perform some cleanup when a crash occurs.
+///
+@external(erlang, "exception_ffi", "on_crash")
+@external(javascript, "./exception_ffi.mjs", "on_crash")
+pub fn on_crash(cleanup: fn() -> b, body: fn() -> a) -> a

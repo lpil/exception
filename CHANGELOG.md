@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.0 - 2024-07-06
+
+- The `on_crash` function has been added.
+
 ## v2.0.0 - 2024-02-17
 
 - The `rescue` function now indicated whether the exception was an error, a
